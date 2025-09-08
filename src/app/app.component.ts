@@ -4,7 +4,7 @@ import { SoloManagerComponent } from './solo-manager/solo-manager.component';
 
 @Component({
   selector: 'app-root',
-  imports: [SoloManagerComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

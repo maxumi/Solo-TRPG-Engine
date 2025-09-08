@@ -1,1 +1,204 @@
-/* You can add global styles to this file, and also import other style files */
+/* GLOBAL — styles.css */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  color: #e0e6ed;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+}
+
+/* Layout cards / steps */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.3);
+}
+
+.step {
+  background: rgba(255,255,255,.08);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255,255,255,.1);
+  transition: all .3s ease;
+}
+.step h2 { color:#4ecdc4; margin-bottom:15px; display:flex; align-items:center; font-size:1.4em; }
+.step-number {
+  background: linear-gradient(45deg,#ff6b6b,#4ecdc4);
+  color:#fff; width:30px; height:30px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; margin-right:15px; font-weight:bold;
+}
+
+/* Primary action button */
+.roll-button {
+  background: linear-gradient(45deg,#ff6b6b,#ff8e8e);
+  color:#fff; border:none; padding:12px 25px; border-radius:25px;
+  cursor:pointer; font-size:1.1em; font-weight:bold; margin:10px 10px 10px 0;
+  transition: all .3s ease; box-shadow: 0 4px 15px rgba(255,107,107,.3);
+}
+.roll-button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,107,.4); }
+
+/* Info result bars */
+.result {
+  background: rgba(76,205,196,.1);
+  border-left: 4px solid #4ecdc4;
+  padding: 15px; margin: 15px 0; border-radius: 8px;
+  font-size: 1.1em; min-height: 50px; display: flex; align-items: center;
+}
+.result.empty { color:#888; font-style: italic; }
+
+/* ===== Unified pill buttons (Chaos + Odds) =====
+   Use .pill-group + .pill-btn in templates.
+   Old classes remain aliased for backwards compatibility. */
+.pill-group, .chaos-buttons, .odds-buttons {
+  display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;
+}
+
+.pill-btn, .chaos-button, .odds-button {
+  background: rgba(69,183,209,.2);
+  color: #45b7d1;
+  border: 2px solid #45b7d1;
+  padding: 12px 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: .95em;
+  font-weight: bold;
+  transition: all .25s ease;
+  outline: none;
+}
+.pill-btn:hover:not(.active),
+.chaos-button:hover:not(.active),
+.odds-button:hover:not(.active) {
+  background: rgba(255,255,255,.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(69,183,209,.2);
+}
+.pill-btn.active, .chaos-button.active, .odds-button.active {
+  background: linear-gradient(45deg,#45b7d1,#4ecdc4);
+  color:#fff;
+  box-shadow: 0 4px 15px rgba(69,183,209,.3);
+  border-color: transparent;
+}
+.pill-btn:focus-visible,
+.chaos-button:focus-visible,
+.odds-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.15),
+    0 0 0 6px rgba(69,183,209,.4);
+}
+
+/* Dice readout cards */
+.oracle-roll { display:flex; gap:20px; align-items:center; margin:10px 0; flex-wrap:wrap; }
+.die-result {
+  background: rgba(76,205,196,.2);
+  border: 2px solid #4ecdc4;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  min-width: 100px;
+}
+.die-result .die-label { font-size:.8em; color:#4ecdc4; margin-bottom:5px; }
+.die-result .die-value { font-size:1.8em; font-weight:bold; }
+
+/* Elements list inputs */
+.element-input { display:flex; gap:10px; margin:20px 0; flex-wrap:wrap; }
+.element-input select, .element-input input {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  padding: 10px; color: #e0e6ed; font-size: 1em;
+}
+.element-input select { min-width:150px; }
+.element-input input { flex:1; min-width:150px; }
+
+/* Elements list */
+.elements-list { margin-top:25px; }
+.elements-list h3 { color:#4ecdc4; margin-bottom:15px; }
+.element-item {
+  background: rgba(255,255,255,.05);
+  border-radius: 8px;
+  padding: 15px; margin-bottom: 10px;
+  border-left: 4px solid #4ecdc4;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.element-type { color:#ff6b6b; font-size:.9em; font-weight:bold; }
+.element-name { font-size:1.1em; font-weight:bold; margin:5px 0; }
+.element-details { color:#aaa; font-size:.9em; }
+
+.delete-button {
+  background: rgba(255,107,107,.2);
+  color:#ff6b6b; border:1px solid #ff6b6b;
+  padding:5px 10px; border-radius:15px; cursor:pointer; font-size:.8em;
+  transition: all .3s ease;
+}
+.delete-button:hover { background:#ff6b6b; color:#fff; }
+
+/* Meaning chips */
+.meaning-words { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
+.meaning-word { background:rgba(69,183,209,.2); padding:8px 16px; border-radius:20px; border:1px solid #45b7d1; }
+
+/* Interpretation panel */
+.interpretation { background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); border-radius:10px; padding:20px; margin-top:25px; }
+.interpretation h3 { color:#ffd700; margin-bottom:10px; }
+
+/* Secondary action */
+.clear-button {
+  background: linear-gradient(45deg,#666,#888);
+  color:#fff; border:none; padding:10px 20px; border-radius:20px; cursor:pointer;
+  font-size:1em; margin-top:20px; transition:all .3s ease;
+}
+.clear-button:hover { transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,.3); }
+
+/* Reference table */
+.reference-table {
+  background: rgba(255,255,255,.05);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+.reference-table h4 { color:#4ecdc4; margin-bottom:15px; }
+.reference-table table { width:100%; border-collapse:collapse; }
+.reference-table th, .reference-table td {
+  padding: 8px 12px; text-align:left;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.reference-table th { color:#ff6b6b; font-weight:bold; }
+
+/* JSON tools (optional) */
+.json-tools { margin-top:15px; display:grid; gap:10px; }
+#elements-json {
+  width:100%; min-height:120px; background:rgba(255,255,255,.08); color:#e0e6ed;
+  border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+.inline-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.small-note { color:#9aa8b4; font-size:.9em; }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .container { padding: 20px; }
+  h1 { font-size: 2em; }
+  .pill-group, .chaos-buttons, .odds-buttons { flex-direction: column; }
+  .element-input { flex-direction: column; }
+  .oracle-roll { flex-direction: column; gap: 10px; }
+  .meaning-words { flex-direction: column; gap: 10px; }
+}

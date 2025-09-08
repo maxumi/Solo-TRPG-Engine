@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>🎲 Oracle & Event System</h1>
+
+  <nav class="tabs" role="tablist" aria-label="Solo Manager Tabs">
+    <a class="tab-button" routerLink="yes-no" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Yes/No Oracle</a>
+    <a class="tab-button" routerLink="elements" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Campaign Elements</a>
+    <a class="tab-button" routerLink="events" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Random Events</a>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>

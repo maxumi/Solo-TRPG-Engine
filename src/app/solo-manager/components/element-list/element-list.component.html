@@ -1,0 +1,71 @@
+<div class="step" *ngIf="(state$ | async) as st">
+  <h2><span class="step-number">📦</span>Campaign Elements</h2>
+
+  <!-- List FIRST -->
+  <div class="elements-list" *ngIf="st.campaignElements.length > 0">
+    <h3>Tracked Elements</h3>
+    <div class="element-item" *ngFor="let el of st.campaignElements; index as i">
+      <div class="element-info">
+        <div class="element-type">{{ el.type }}</div>
+        <div class="element-name">{{ el.name }}</div>
+        <div class="element-details" *ngIf="el.details">{{ el.details }}</div>
+      </div>
+      <button class="delete-button" (click)="deleteElement(i)">Delete</button>
+    </div>
+  </div>
+
+  <div *ngIf="st.campaignElements.length === 0" class="small-note">
+    No elements added yet. Use the form below to start tracking them.
+  </div>
+
+  <!-- Input row -->
+  <div class="element-input">
+    <select [(ngModel)]="newType">
+      <option *ngFor="let t of elementTypes" [ngValue]="t">{{ t }}</option>
+    </select>
+
+    <input type="text" [(ngModel)]="newName" placeholder="Name" />
+    <input type="text" [(ngModel)]="newDetails" placeholder="Details (optional)" />
+    <button class="roll-button" (click)="addElement()">Add</button>
+  </div>
+
+  <!-- Tools: Clear + Import -->
+  <div class="json-tools">
+    <label><strong>Import Elements (JSON)</strong></label>
+
+    <!-- Text import -->
+    <textarea id="elements-json"
+              [(ngModel)]="importText"
+              placeholder='Examples:
+[
+  {"type":"Character","name":"Arix the Scout","details":"Knows hidden trails"},
+  {"type":"Faction","name":"Obsidian Syndicate"}
+]
+
+OR
+
+{
+  "Character":[{"name":"Arix the Scout","details":"Knows hidden trails"}],
+  "Faction":["Obsidian Syndicate","Starfarers Union"]
+}'></textarea>
+
+    <div class="inline-actions">
+      <button class="roll-button" (click)="importFromText()">Import JSON (text)</button>
+
+      <!-- File import -->
+      <input type="file"
+             #fileInput
+             accept=".json,application/json"
+             (change)="onFileSelected($event)"
+             style="display:none" />
+      <button class="roll-button" (click)="fileInput.click()">Import JSON (file)</button>
+      <button class="roll-button" (click)="exportToFile()">Download JSON</button>
+      <!-- Clear -->
+      <button class="roll-button" (click)="clearAll()">Clear All Elements</button>
+    </div>
+
+    <div class="small-note">
+      Imports are appended to the current list. “Clear All” removes every current element.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<!-- Chaos Factor -->
+<div class="step">
+  <h2><span class="step-number">⚙️</span>Chaos Factor</h2>
+  <p>Set your current chaos factor level:</p>
+
+  <ng-container *ngIf="(state$ | async) as st">
+    <div class="pill-group" role="tablist" aria-label="Chaos Factor">
+      <button
+        type="button"
+        class="pill-btn"
+        [class.active]="st.currentChaos.die === 'd10'"
+        [attr.aria-pressed]="st.currentChaos.die === 'd10'"
+        (click)="setChaos('d10','Standard')">
+        Standard (d10)
+      </button>
+
+      <button
+        type="button"
+        class="pill-btn"
+        [class.active]="st.currentChaos.die === 'd8'"
+        [attr.aria-pressed]="st.currentChaos.die === 'd8'"
+        (click)="setChaos('d8','Unstable')">
+        Unstable (d8)
+      </button>
+
+      <button
+        type="button"
+        class="pill-btn"
+        [class.active]="st.currentChaos.die === 'd6'"
+        [attr.aria-pressed]="st.currentChaos.die === 'd6'"
+        (click)="setChaos('d6','Chaotic')">
+        Chaotic (d6)
+      </button>
+    </div>
+
+    <!-- put the status OUTSIDE the pill group -->
+    <div class="result pill-status" id="chaos-status">
+      Current: <strong>{{ st.currentChaos.name }} ({{ st.currentChaos.die }})</strong>
+    </div>
+  </ng-container>
+</div>
+
+<!-- Oracle Question -->
+<div class="step" *ngIf="(state$ | async) as st2">
+  <h2><span class="step-number">🎯</span>Oracle Question</h2>
+  <p>Ask a yes/no question, set the odds, then roll:</p>
+
+    <div class="pill-group">
+        <button class="pill-btn" [class.active]="st2.currentOdds.target===2" (click)="setOdds(2,'Certain')">Certain (2+)</button>
+        <button class="pill-btn" [class.active]="st2.currentOdds.target===3" (click)="setOdds(3,'Likely')">Likely (3+)</button>
+        <button class="pill-btn" [class.active]="st2.currentOdds.target===4" (click)="setOdds(4,'Standard')">Standard (4+)</button>
+        <button class="pill-btn" [class.active]="st2.currentOdds.target===5" (click)="setOdds(5,'Unlikely')">Unlikely (5+)</button>
+        <button class="pill-btn" [class.active]="st2.currentOdds.target===6" (click)="setOdds(6,'Almost Impossible')">Almost Impossible (6)</button>
+    </div>
+
+  <div class="result" id="result pill-status">
+    Current Odds:
+    <strong>{{ st2.currentOdds.name }} ({{ st2.currentOdds.target }}+)</strong>
+  </div>
+
+  <button class="roll-button" (click)="rollOracle()">Roll Oracle (d6 + Chaos Die)</button>
+  <div id="oracle-result" class="result" [class.empty]="!oracleText">
+    <ng-container *ngIf="oracleText; else emptyOracle">
+      <div class="oracle-roll">
+        <div class="die-result">
+          <div class="die-label">Oracle Die</div>
+          <div class="die-value">{{ oracleDie }}</div>
+        </div>
+        <div class="die-result">
+          <div class="die-label">Chaos {{ st2.currentChaos.die }}</div>
+          <div class="die-value">{{ oracleChaosDie }}</div>
+        </div>
+      </div>
+      <strong>{{ oracleText }}</strong>
+    </ng-container>
+    <ng-template #emptyOracle>Set odds and roll to get your answer...</ng-template>
+  </div>
+</div>
+
+<!-- Scene Setup -->
+<div class="step" *ngIf="(state$ | async) as st3">
+  <h2><span class="step-number">🎬</span>Scene Setup</h2>
+  <p>Roll to determine if your scene is modified:</p>
+  <button class="roll-button" (click)="rollScene()">Roll Scene Setup (Chaos Die)</button>
+  <div id="scene-result" class="result" [class.empty]="!sceneText">
+    <ng-container *ngIf="sceneText; else emptyScene">
+      <div class="oracle-roll">
+        <div class="die-result">
+          <div class="die-label">Chaos {{ st3.currentChaos.die }}</div>
+          <div class="die-value">{{ sceneChaosDie }}</div>
+        </div>
+      </div>
+      Scene: <strong>{{ sceneText }}</strong>
+    </ng-container>
+    <ng-template #emptyScene>Roll to see if your scene is altered or interrupted...</ng-template>
+  </div>
+</div>
+<section class="reference-table" aria-labelledby="ref-title">
+  <h4 id="ref-title">Oracle &amp; Scene Reference Tables</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Chaos Die Roll</th>
+        <th>Scene Setup</th>
+        <th>Oracle Modifier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1–2</td><td>Altered</td><td>And...</td></tr>
+      <tr><td>3–4</td><td>Interrupted</td><td>But...</td></tr>
+      <tr><td>5+</td><td>Unmodified</td><td>Unmodified</td></tr>
+    </tbody>
+  </table>
+
+  <br />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Oracle Roll Needed</th>
+        <th>Odds of Yes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2+</td><td>Certain</td></tr>
+      <tr><td>3+</td><td>Likely</td></tr>
+      <tr><td>4+</td><td>Standard</td></tr>
+      <tr><td>5+</td><td>Unlikely</td></tr>
+      <tr><td>6</td><td>Almost Impossible</td></tr>
+    </tbody>
+  </table>
+</section>

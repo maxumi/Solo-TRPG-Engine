@@ -1,0 +1,106 @@
+<!-- Sticky Action Dock -->
+<div class="action-dock" role="toolbar" aria-label="Random event actions">
+  <button class="pill-btn primary" (click)="rollEventFocus()">Roll Focus (1d6)</button>
+
+  <div class="dock-split">
+    <button class="pill-btn" (click)="generateSubject()">Random Subject</button>
+    <button class="pill-btn" (click)="useRandomElement()">Use Campaign Element</button>
+  </div>
+
+  <button class="pill-btn" (click)="rollEventMeaning()">Roll Meaning (2)</button>
+
+  <button class="pill-btn" (click)="rollAll()" title="Roll Focus + Subject + Meaning">Roll All</button>
+
+  <div class="dock-grow"></div>
+  <button class="pill-btn subtle" (click)="clearEventResults()">Clear</button>
+</div>
+<!-- Sticky Action Dock stays the same -->
+
+<!-- Compact summary card -->
+<div class="event-summary" *ngIf="hasAllParts">
+  <div class="event-summary__title">
+    <span class="emoji">🎯</span> Event Interpretation
+  </div>
+
+  <div class="event-summary__grid">
+    <div class="row">
+      <span class="label">Focus</span>
+      <span class="value">
+        <span class="badge focus" [attr.data-type]="focusResult.toLowerCase()">
+          {{ focusResult }}
+        </span>
+        <span class="muted">— {{ focusDescription }}</span>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">Subject</span>
+      <span class="value">
+        <span class="chip">{{ subjectText }}</span>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">Meaning</span>
+      <span class="value">
+        <span class="chip mono">{{ meaning1 }}</span>
+        <span class="chip mono">+</span>
+        <span class="chip mono">{{ meaning2 }}</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="event-summary__actions">
+    <button class="pill-btn subtle" (click)="copyInterpretation()">Copy summary</button>
+  </div>
+</div>
+
+<!-- Focus card -->
+<div class="result-card" [class.empty]="!focusResult" aria-live="polite">
+  <div class="result-card__header">
+    <span class="num">1</span>
+    <h3>Event Focus</h3>
+    <span class="spacer"></span>
+    <span class="die mono" *ngIf="focusRoll!==null">🎲 {{ focusRoll }}</span>
+  </div>
+
+  <div class="result-card__body" *ngIf="focusResult; else focusEmpty">
+    <span class="badge focus" [attr.data-type]="focusResult.toLowerCase()">{{ focusResult }}</span>
+    <span class="muted">— {{ focusDescription }}</span>
+  </div>
+  <ng-template #focusEmpty>
+    <div class="placeholder">Click “Roll Focus” in the dock…</div>
+  </ng-template>
+</div>
+
+<!-- Subject card -->
+<div class="result-card" [class.empty]="!subjectText" aria-live="polite">
+  <div class="result-card__header">
+    <span class="num">2</span>
+    <h3>Event Subject</h3>
+  </div>
+
+  <div class="result-card__body" *ngIf="subjectText; else subjEmpty">
+    <span class="chip">{{ subjectText }}</span>
+  </div>
+  <ng-template #subjEmpty>
+    <div class="placeholder">Choose “Random Subject” or “Use Campaign Element”…</div>
+  </ng-template>
+</div>
+
+<!-- Meaning card -->
+<div class="result-card" [class.empty]="!(meaning1 && meaning2)" aria-live="polite">
+  <div class="result-card__header">
+    <span class="num">3</span>
+    <h3>Event Meaning</h3>
+  </div>
+
+  <div class="result-card__body" *ngIf="meaning1 && meaning2; else meaningEmpty">
+    <span class="chip mono">{{ meaning1 }}</span>
+    <span class="chip mono">+</span>
+    <span class="chip mono">{{ meaning2 }}</span>
+  </div>
+  <ng-template #meaningEmpty>
+    <div class="placeholder">Click “Roll Meaning” in the dock…</div>
+  </ng-template>
+</div>
