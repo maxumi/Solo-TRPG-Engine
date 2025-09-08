@@ -15,7 +15,17 @@ export class ElementListComponent {
   state$ = this.s.state$;
 
   // bound form values
-  elementTypes = ['Character', 'Location', 'Thread', 'Item', 'Other'];
+  elementTypes = [
+    'Character',
+    'Plot Point',
+    'Theme',
+    'Faction',
+    'Goal',
+    'Object',
+    'Location',
+    'Trouble',
+    'Scene'
+  ];
   newType = this.elementTypes[0];
   newName = '';
   newDetails = '';
